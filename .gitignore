@@ -1,0 +1,6 @@
+.idea
+.env
+*-lock.json
+.env.*.local
+node_modules/
+yarn-error.log

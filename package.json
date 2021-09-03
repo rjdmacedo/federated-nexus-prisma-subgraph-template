@@ -1,0 +1,85 @@
+{
+  "name": "--servicename---service",
+  "version": "0.0.0-development",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('⛔ Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
+    "postinstall": "yarn generate",
+    "prepare": "husky install",
+    "clean": "rm -rf dist",
+    "lint": "tslint-config-prettier-check ./tslint.json",
+    "build": "yarn -s clean && yarn -s generate && tsc",
+    "dev": "env-cmd ts-node-dev -r tsconfig-paths/register --transpile-only ./src/index.ts",
+    "dev:type:check": "tsc --noEmit --watch",
+    "database:compose": "docker-compose up -d",
+    "prisma:migrate": "yarn prisma migrate dev",
+    "prisma:deploy": "yarn prisma migrate deploy",
+    "generate": "yarn generate:prisma && yarn generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "ts-node -r tsconfig-paths/register --transpile-only -P tsconfig.json ./src/schema.ts",
+    "test": "yarn generate:nexus && jest"
+  },
+  "husky": {
+    "hooks": {
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
+    }
+  },
+  "lint-staged": {
+    "{prisma,src,test}/**/*.ts": [
+      "yarn generate",
+      "yarn lint",
+      "yarn test"
+    ]
+  },
+  "dependencies": {
+    "@apollo/federation": "0.30.0",
+    "@prisma/client": "2.23.0",
+    "apollo-server-express": "3.3.0",
+    "bcryptjs": "2.4.3",
+    "express": "4.17.1",
+    "faker": "5.5.3",
+    "graphql": "15.5.2",
+    "graphql-middleware": "6.1.5",
+    "graphql-scalars": "1.10.0",
+    "graphql-shield": "7.5.0",
+    "graphql-transform-federation": "2.2.0",
+    "jsonwebtoken": "8.5.1",
+    "nexus": "1.1.0",
+    "nexus-plugin-prisma": "0.35.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "13.1.0",
+    "@commitlint/config-conventional": "13.1.0",
+    "@digitalroute/cz-conventional-changelog-for-jira": "6.6.0",
+    "@types/bcryptjs": "2.4.2",
+    "@types/jest": "27.0.1",
+    "@types/jsonwebtoken": "8.5.5",
+    "@types/node": "14.17.14",
+    "all-contributors-cli": "6.20.0",
+    "apollo-server": "3.3.0",
+    "apollo-server-testing": "2.25.2",
+    "child_process": "1.0.2",
+    "colors": "1.4.0",
+    "commitizen": "4.2.4",
+    "env-cmd": "10.1.0",
+    "get-port": "5.1.1",
+    "graphql-request": "3.5.0",
+    "husky": "7.0.2",
+    "jest": "27.1.0",
+    "lint-staged": "11.1.2",
+    "prettier": "2.3.2",
+    "prisma": "2.23.0",
+    "prompt": "1.2.0",
+    "replace-in-file": "6.2.0",
+    "shelljs": "0.8.4",
+    "ts-jest": "27.0.5",
+    "ts-node": "10.2.1",
+    "ts-node-dev": "1.1.8",
+    "tsconfig-paths": "3.11.0",
+    "tslint": "6.1.3",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-eslint-rules": "5.4.0",
+    "typescript": "4.4.2"
+  }
+}

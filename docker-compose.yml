@@ -1,0 +1,17 @@
+version: "3"
+services:
+  database:
+    container_name: users-service
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users-service
+    volumes:
+      - database-data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+volumes:
+  database-data:

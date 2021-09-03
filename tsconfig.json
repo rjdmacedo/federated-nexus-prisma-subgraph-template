@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Node",
+    "lib": ["es2016"],
+    "rootDir": ".",
+    "strict": true,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "importsNotUsedAsValues": "error",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "baseUrl": "./",
+    "paths": {
+      "@/*" : ["./src/*"],
+      "~/*" : ["./tests/*"]
+    }
+  },
+  "include": ["src"],
+}

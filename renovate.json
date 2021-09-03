@@ -1,0 +1,13 @@
+{
+  "extends": ["config:base", ":assignee(RafaelMLMacedo)", ":reviewer(RafaelMLMacedo)"],
+  "patch": {
+    "automerge": true
+  },
+  "packageRules": [
+    {
+      "depTypeList": ["dependencies"],
+      "rangeStrategy": "pin"
+    }
+  ]
+}
+
