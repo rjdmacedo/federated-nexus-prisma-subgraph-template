@@ -1,11 +1,11 @@
 # Federated Subgraph using Prisma and Nexus
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square "All Contributors")](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://paypal.me/rjdmacedo)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-[![renovate badge](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot)](https://app.renovatebot.com/dashboard)
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg "donate")](https://paypal.me/rjdmacedo)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg "styled with prettier")](https://github.com/prettier/prettier)
+[![renovate badge](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot "maintained with renovate")](https://app.renovatebot.com/dashboard)
 
 This starter project makes creating [Apollo Federated](https://www.apollographql.com/docs/federation/) subgraphs with [Prisma.io](https://www.prisma.io/) and [GraphQL Nexus](https://nexusjs.org/) a breeze.
 
