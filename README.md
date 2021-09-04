@@ -11,16 +11,22 @@ This starter project makes creating [Apollo Federated](https://www.apollographql
 
 ### Usage
 
+![](https://i.imgur.com/opUmHp0.png)
+
+### Usage
+
+```bash
+git clone https://github.com/RafaelMLMacedo/federated-nexus-prisma-subgraph-template.git YOUR_FOLDER_NAME
+cd YOUR_FOLDER_NAME
+
+yarn install
+```
+
 #### Create a `.env` and a `prisma.env`
 
 ```bash
 $ cp .env.example .env
 $ cp prisma/.env.example prisma/.env
-```
-
-#### Install dependencies
-```bash
-$ yarn install
 ```
 
 **Start coding!** `package.json` and entry files are already set up for you, so don't worry about linking to your main file, typings, etc. Just keep those files with the same name.
