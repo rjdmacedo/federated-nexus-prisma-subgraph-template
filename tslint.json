@@ -37,6 +37,6 @@
     "whitespace": false
   },
   "linterOptions": {
-    "exclude": ["node_modules", "prisma/*", "./.yarn"]
+    "exclude": ["node_modules", "tools/*" ,"prisma/*", "./.yarn"]
   }
 }

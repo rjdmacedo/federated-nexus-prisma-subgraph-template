@@ -9,7 +9,7 @@
   },
   "scripts": {
     "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('⛔ Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
-    "postinstall": "yarn generate",
+    "postinstall": "ts-node tools/init",
     "prepare": "husky install",
     "clean": "rm -rf dist",
     "lint": "tslint --project tsconfig.json",
@@ -74,6 +74,7 @@
     "husky": "7.0.2",
     "jest": "27.1.0",
     "lint-staged": "11.1.2",
+    "path": "0.12.7",
     "prettier": "2.3.2",
     "prisma": "2.23.0",
     "prompt": "1.2.0",
