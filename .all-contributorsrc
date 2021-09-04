@@ -1,0 +1,14 @@
+{
+  "projectName": "federated-nexus-prisma-subgraph-template",
+  "projectOwner": "RafaelMLMacedo",
+  "repoType": "github",
+  "repoHost": "https://github.com/RafaelMLMacedo/federated-nexus-prisma-subgraph-template",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "commitConvention": "angular",
+  "contributors": [],
+  "contributorsPerLine": 7
+}
