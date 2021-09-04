@@ -3,6 +3,10 @@
   "version": "0.0.0-development",
   "license": "MIT",
   "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RafaelMLMacedo/federated-nexus-prisma-subgraph-template.git"
+  },
   "scripts": {
     "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('⛔ Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
     "postinstall": "yarn generate",
