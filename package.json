@@ -22,9 +22,7 @@
     "generate": "yarn generate:prisma && yarn generate:nexus",
     "generate:prisma": "prisma generate",
     "generate:nexus": "ts-node -r tsconfig-paths/register --transpile-only -P tsconfig.json ./src/schema.ts",
-    "test": "jest --detectOpenHandles",
-    "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate"
+    "test": "jest --detectOpenHandles"
   },
   "husky": {
     "hooks": {
@@ -65,7 +63,6 @@
     "@types/jest": "27.0.1",
     "@types/jsonwebtoken": "8.5.5",
     "@types/node": "14.17.14",
-    "all-contributors-cli": "6.20.0",
     "apollo-server": "3.3.0",
     "apollo-server-testing": "2.25.2",
     "child_process": "1.0.2",
