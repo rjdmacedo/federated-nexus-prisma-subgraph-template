@@ -9,7 +9,7 @@
   },
   "scripts": {
     "preinstall": "node -e \"if (process.env.npm_execpath.indexOf('yarn') === -1) throw new Error('⛔ Use yarn for installing: https://yarnpkg.com/en/docs/install')\"",
-    "postinstall": "ts-node tools/init",
+    "postinstall": "ts-node tools/start",
     "prepare": "husky install",
     "clean": "rm -rf dist",
     "lint": "tslint --project tsconfig.json",
