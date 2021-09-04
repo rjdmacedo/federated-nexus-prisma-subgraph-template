@@ -1,10 +1,10 @@
-import { createTestContext } from '../__helpers';
+// tslint:disable-next-line:no-submodule-imports
+import { createTestContext } from '~/__helpers';
 
 const context = createTestContext();
 
 describe('User', () => {
   it('should fetch users', async () => {
-    console.log(context);
     const users = await context.client.request(`
       query Query {
         users(first: 1) {

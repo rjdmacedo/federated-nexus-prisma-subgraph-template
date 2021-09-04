@@ -1,30 +1,43 @@
 import { rule, shield } from 'graphql-shield';
 
-import { getUserId } from '@/utils';
 import type { Context } from '@/context';
 
-const rules = {
-  isAuthenticatedUser: rule()((_parent, _args, context: Context) => {
-    const userId = getUserId(context);
-    return Boolean(userId);
-  }),
+// @ts-ignore
+const getPermissions = ({ user }) => {
+  return ['read:own_account', 'read:any_account'];
+};
 
-  isProfileOwner: rule()(async (_parent, args, context) => {
-    const userId = getUserId(context);
-    const profile = await context.prisma.profile
-      .findUnique({
+const rules = {
+  is: {
+    authenticated: rule()((_parent, _args, { userId }: Context) => {
+      return Boolean(userId);
+    }),
+    readingOwnAccount: rule()((parent, { id }, { userId }: Context) => {
+      return userId === id;
+      // return user.sub === id;
+    }),
+  },
+  can: {
+    readAnyAccount: rule()((parent, args, context: Context) => {
+      const { userId } = context;
+      const user = context.prisma.user.findUnique({
         where: {
-          id: Number(args.id),
+          id: Number(userId),
         },
-      })
-      .profile();
-    return userId === profile.id;
-  }),
+      });
+      const userPermissions = getPermissions({ user });
+      return userPermissions.includes('read:any_account');
+    }),
+    readOwnAccount: rule()((parent, args, { user }) => {
+      const userPermissions = getPermissions({ user });
+      return userPermissions.includes('read:own_account');
+    }),
+  },
 };
 
 export const permissions = shield({
   Query: {
-    Me: rules.isAuthenticatedUser,
+    me: rules.is.authenticated,
   },
   Mutation: {},
 });

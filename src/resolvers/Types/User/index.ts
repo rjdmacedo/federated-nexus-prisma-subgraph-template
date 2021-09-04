@@ -1,13 +1,4 @@
-import { objectType, asNexusMethod } from 'nexus';
-import { DateTimeResolver } from 'graphql-scalars';
-
-export const AuthPayload = objectType({
-  name: 'AuthPayload',
-  definition(t) {
-    t.string('token');
-    t.field('user', { type: 'User' });
-  },
-});
+import { objectType } from 'nexus';
 
 export const User = objectType({
   name: 'User',
@@ -23,5 +14,3 @@ export const User = objectType({
     t.field('updatedAt', { type: 'DateTime' });
   },
 });
-
-export const DateTime = asNexusMethod(DateTimeResolver, 'date');

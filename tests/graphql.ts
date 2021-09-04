@@ -1,13 +1,18 @@
-// noinspection GraphQLUnresolvedReference
-
 import gql from 'graphql-tag';
 
-export const createPlaylist = gql`
-  mutation createUser($data: UserCreateInput!) {
-    createUser(data: $data) {
-      ... on User {
+export const login = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
         id
         firstName
+        lastName
+        email
+        password
+        confirmed
+        createdAt
+        updatedAt
       }
     }
   }
@@ -15,9 +20,15 @@ export const createPlaylist = gql`
 
 export const getUser = gql`
   query user($where: UserWhereUniqueInput!) {
-    playlist(where: $where) {
+    user(where: $where) {
       id
+      firstName
+      lastName
       email
+      password
+      confirmed
+      createdAt
+      updatedAt
     }
   }
 `;

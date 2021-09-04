@@ -1,8 +1,9 @@
+require('dotenv').config();
 import { ApolloServer } from 'apollo-server-express';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 
-import federatedSchema from '@/schema';
 import { createServer } from '@/utils';
+import { federatedSchema } from '@/schema';
 import { createContext, prisma } from '@/context';
 
 export const apollo = new ApolloServer({
@@ -12,20 +13,22 @@ export const apollo = new ApolloServer({
 });
 
 interface ServerConfig {
-  port: String;
+  port: string;
 }
 
 const config: ServerConfig = {
   port: process.env.SERVER_PORT || '4001',
 };
 
-export const run = async ({ port }: ServerConfig) => {
+const run = async ({ port }: ServerConfig) => {
   const express = await createServer(apollo);
   express.listen({ port }, () => {
+    // tslint:disable-next-line:no-console
     console.log(`🚀 Server ${process.env.NODE_ENV} ready at http://localhost:${port}/graphql`);
   });
 };
 
+// tslint:disable-next-line:no-floating-promises
 run(config).finally(async () => {
   await prisma.$disconnect();
 });

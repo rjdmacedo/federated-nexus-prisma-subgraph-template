@@ -4,20 +4,19 @@ import { nexusPrisma } from 'nexus-plugin-prisma';
 import { transformSchemaFederation } from 'graphql-transform-federation';
 
 import { prisma } from '@/context';
-import * as allTypes from '@/resolvers';
+import * as Types from '@/resolvers';
 
 const schema = makeSchema({
-  types: [allTypes],
+  types: [Types],
   plugins: [nexusPrisma({ experimentalCRUD: true })],
   outputs: {
     schema: path.join(process.cwd(), './generated/schema.graphql'),
-    typegen: path.join(__dirname, '../node_modules/@types/nexus-typegen/index.d.ts'),
+    typegen: path.join(process.cwd(), '/generated/generated-types.d.ts'),
   },
   contextType: {
     module: require.resolve('./context'),
     export: 'Context',
   },
-  prettierConfig: __dirname + '/../.prettierrc.json',
   sourceTypes: {
     modules: [
       {
@@ -28,18 +27,16 @@ const schema = makeSchema({
   },
 });
 
-const federatedSchema = transformSchemaFederation(schema, {
+export const federatedSchema = transformSchemaFederation(schema, {
   Query: {
     extend: true,
   },
   User: {
     keyFields: ['id'],
     async resolveReference(reference: any) {
-      return await prisma.user.findUnique({
+      return prisma.user.findUnique({
         where: { id: reference.id },
       });
     },
   },
 });
-
-export default federatedSchema;

@@ -17,6 +17,7 @@ export const Mutation = objectType({
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
+      // @ts-ignore
       resolve: async (_, args, context: Context) => {
         const user = await context.prisma.user.create({
           data: {
@@ -27,7 +28,11 @@ export const Mutation = objectType({
           },
         });
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token: sign({ userId: user.id }, APP_SECRET, {
+            algorithm: 'HS256',
+            subject: `${user.id}`,
+            expiresIn: '1d',
+          }),
           user,
         };
       },
@@ -38,6 +43,7 @@ export const Mutation = objectType({
         email: nonNull(stringArg()),
         password: nonNull(stringArg()),
       },
+      // @ts-ignore
       resolve: async (_, args, context: Context) => {
         const user = await context.prisma.user.findUnique({
           where: {
@@ -52,7 +58,11 @@ export const Mutation = objectType({
           throw new Error('Invalid password');
         }
         return {
-          token: sign({ userId: user.id }, APP_SECRET),
+          token: sign({ userId: user.id }, APP_SECRET, {
+            algorithm: 'HS256',
+            subject: `${user.id}`,
+            expiresIn: '1d',
+          }),
           user,
         };
       },

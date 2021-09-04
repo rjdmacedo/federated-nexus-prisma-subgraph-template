@@ -14,7 +14,7 @@ const config: Config.InitialOptions = {
   testEnvironment: 'node',
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$',
   moduleFileExtensions: ['ts', 'tsx', 'js'],
-  coveragePathIgnorePatterns: ['/node_modules/', '/test/'],
+  coveragePathIgnorePatterns: ['/node_modules/', '/tests/'],
   coverageThreshold: {
     global: {
       branches: 90,
@@ -30,4 +30,5 @@ const config: Config.InitialOptions = {
   },
 };
 
+// tslint:disable-next-line:no-default-export
 export default config;

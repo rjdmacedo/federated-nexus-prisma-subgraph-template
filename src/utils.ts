@@ -1,28 +1,19 @@
-import { verify } from 'jsonwebtoken';
 import express, { Express } from 'express';
 import { PrismaClient } from '@prisma/client';
 import type { ApolloServer } from 'apollo-server-express';
-import type { Context } from '@/context';
 
-interface Token {
-  userId: string;
-}
-
+/** APP_SECRET is used to sign JWT tokens and verifying them later */
 export const APP_SECRET = 'CHANGE-ME';
+/** Prisma client used to access the data layer */
 export const prisma = new PrismaClient({ log: ['query'] });
-
-export function getUserId(context: Context) {
-  const authHeader = context.req.get('Authorization');
-  if (authHeader) {
-    const token = authHeader.replace('Bearer ', '');
-    const verifiedToken = verify(token, APP_SECRET) as Token;
-    return verifiedToken && Number(verifiedToken.userId);
-  }
-}
-
-export async function createServer(apollo: ApolloServer): Promise<Express> {
+/**
+ * Creates an Express server leveraging 'apollo-server-express'
+ * @param server {ApolloServer}
+ * @returns {Promise<Express>}
+ */
+export async function createServer(server: ApolloServer): Promise<Express> {
   const app = express();
-  await apollo.start();
-  apollo.applyMiddleware({ app });
+  await server.start();
+  server.applyMiddleware({ app });
   return app;
 }

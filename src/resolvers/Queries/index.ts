@@ -1,6 +1,5 @@
 import { objectType } from 'nexus';
 
-import { getUserId } from '@/utils';
 import type { Context } from '@/context';
 
 export const Query = objectType({
@@ -10,8 +9,11 @@ export const Query = objectType({
     t.crud.users();
     t.field('me', {
       type: 'User',
+      // @ts-ignore
       resolve: (_parent, _args, context: Context) => {
-        return context.prisma.user.findUnique({ where: { id: getUserId(context) || undefined } });
+        return context.prisma.user.findUnique({
+          where: { id: Number(context.userId) || undefined },
+        });
       },
     });
   },

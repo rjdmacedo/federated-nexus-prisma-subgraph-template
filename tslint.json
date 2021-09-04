@@ -20,6 +20,7 @@
     "no-duplicate-variable": true,
     "no-empty": false,
     "no-eval": true,
+    "no-var-requires": false,
     "no-default-export": true,
     "no-shadowed-variable": true,
     "no-string-literal": true,
@@ -29,12 +30,13 @@
     "no-unbound-method": true,
     "no-floating-promises": true,
     "radix": true,
+    "no-implicit-dependencies": false,
     "restrict-plus-operands": true,
     "trailing-comma": [false],
     "triple-equals": [true, "allow-null-check"],
     "whitespace": false
   },
   "linterOptions": {
-    "exclude": ["generated/**/*.ts", "docs/**/*.ts"]
+    "exclude": ["node_modules", "prisma/*", "./.yarn"]
   }
 }

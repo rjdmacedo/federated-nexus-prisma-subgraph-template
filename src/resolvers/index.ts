@@ -1,9 +1,9 @@
-import * as Types from '@/resolvers/types';
-import { Query } from '@/resolvers/Queries';
-import { Mutation } from '@/resolvers/Mutations';
+import * as Types from './Types';
+import { Query } from './Queries'
+import { Mutation } from './Mutations'
 
 export const resolvers = {
   ...Types,
   Query,
-  Mutation,
+  Mutation
 };

@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 
-import federatedSchema from '@/schema';
+import { federatedSchema } from '@/schema';
 
 export const constructTestServer = ({ context = {} } = {}) => {
   const server = new ApolloServer({
