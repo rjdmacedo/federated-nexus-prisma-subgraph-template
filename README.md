@@ -11,7 +11,7 @@ This starter project makes creating [Apollo Federated](https://www.apollographql
 
 ### Usage
 
-![](https://i.imgur.com/opUmHp0.png)
+![](https://i.imgur.com/6su71nR.png)
 
 ### Usage
 
