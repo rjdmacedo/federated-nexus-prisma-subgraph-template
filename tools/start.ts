@@ -12,8 +12,8 @@ const modifyFiles = ['LICENSE', 'package.json', 'tools/gh-pages-publish.ts'];
 
 const _promptSchemaServiceName = {
   properties: {
-    library: {
-      description: colors.cyan('What do you want the library to be called? (use kebab-case)'),
+    service: {
+      description: colors.cyan('What do you want the service to be called? (use kebab-case)'),
       pattern: /^[a-z]+(-[a-z]+)*$/,
       type: 'string',
       required: true,
@@ -49,9 +49,11 @@ if (!which('git')) {
 }
 
 // Say hi!
-console.log(colors.cyan("Hi! You're almost ready to make the next great TypeScript library."));
+console.log(
+  colors.cyan("Hi! You're almost ready to make the next great apollo federated micro-service."),
+);
 
-// Generate the library name and start the tasks
+// Generate the service name and start the tasks
 if (process.env.CI == null) {
   if (!serviceNameSuggestedIsDefault()) {
     serviceNameSuggestedAccept();
@@ -64,7 +66,7 @@ if (process.env.CI == null) {
 }
 
 /**
- * Asks the user for the name of the library if it has been cloned into the
+ * Asks the user for the name of the service if it has been cloned into the
  * default directory, or if they want a different name to the one suggested
  */
 function serviceNameCreate() {
@@ -76,18 +78,18 @@ function serviceNameCreate() {
       return;
     }
 
-    setupService(res.library);
+    setupService(res.service);
   });
 }
 
 /**
- * Sees if the users wants to accept the suggested library name if the project
- * has been cloned into a custom directory (i.e. it's not 'typescript-library-starter')
+ * Sees if the users wants to accept the suggested service name if the project
+ * has been cloned into a custom directory (i.e. it's not 'apollo-federated-service')
  */
 function serviceNameSuggestedAccept() {
   _prompt.get(_promptSchemaServiceSuggest, (err: any, res: any) => {
     if (err) {
-      console.log(colors.red("Sorry, you'll need to type the library name"));
+      console.log(colors.red("Sorry, you'll need to type the service name"));
       serviceNameCreate();
     }
 
@@ -100,7 +102,7 @@ function serviceNameSuggestedAccept() {
 }
 
 /**
- * The library name is suggested by looking at the directory name of the
+ * The service name is suggested by looking at the directory name of the
  * tools parent directory and converting it to kebab-case
  *
  * The regex for this looks for any non-word or non-digit character, or
@@ -117,14 +119,14 @@ function serviceNameSuggested() {
 }
 
 /**
- * Checks if the suggested library name is the default, which is 'typescript-library-starter'
+ * Checks if the suggested service name is the default, which is 'apollo-federated-service'
  */
 function serviceNameSuggestedIsDefault() {
-  return serviceNameSuggested() === 'typescript-library-starter';
+  return serviceNameSuggested() === 'apollo-federated-service';
 }
 
 /**
- * Calls all of the functions needed to setup the library
+ * Calls all of the functions needed to setup the service
  *
  * @param serviceName
  */
@@ -165,7 +167,7 @@ function removeItems() {
 }
 
 /**
- * Updates the contents of the template files with the library name or user details
+ * Updates the contents of the template files with the service name or user details
  *
  * @param serviceName
  * @param username
@@ -176,12 +178,18 @@ function modifyContents(serviceName: string, username: string, usermail: string)
 
   let files = modifyFiles.map((f) => path.resolve(__dirname, '..', f));
   try {
-    replace.sync({
+    const results: Array<{ hasChanged: boolean; file: string }> = replace.sync({
       files,
       from: [/--servicename--/g, /--username--/g, /--usermail--/g],
       to: [serviceName, username, usermail],
     });
-    console.log(colors.yellow(modifyFiles.join('\n')));
+
+    results
+      .filter((result) => result.hasChanged)
+      .map((result) => result.file)
+      .forEach((file) => {
+        console.log(`- ${colors.yellow(file.replace(`${process.cwd()}/`, ''))}`);
+      });
   } catch (error) {
     console.error('An error occurred modifying the file: ', error);
   }
@@ -190,7 +198,7 @@ function modifyContents(serviceName: string, username: string, usermail: string)
 }
 
 /**
- * Calls any external programs to finish setting up the library
+ * Calls any external programs to finish setting up the service
  */
 function finalize() {
   console.log(colors.underline.white('Finalizing'));
@@ -205,11 +213,13 @@ function finalize() {
   let jsonPackage = path.resolve(__dirname, '..', 'package.json');
   const pkg = JSON.parse(readFileSync(jsonPackage) as any);
 
-  // Note: Add items to remove from the package file here
-  delete pkg.scripts.postinstall;
+  const prev = pkg.scripts.postinstall;
+  pkg.scripts.postinstall = pkg.scripts.postinstall.replace('ts-node tools/start', 'yarn generate');
 
   writeFileSync(jsonPackage, JSON.stringify(pkg, null, 2));
-  console.log(colors.green('post-install script has been removed'));
+  if (pkg.scripts.postinstall !== prev) {
+    console.log(colors.green('post-install script has been changed to "yarn generate"'));
+  }
 
   // Initialize Husky
   fork(path.resolve(__dirname, '..', 'node_modules', 'husky', 'bin', 'install'), { silent: true });
