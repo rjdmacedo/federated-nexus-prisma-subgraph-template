@@ -7,7 +7,7 @@ const { rm, which, exec } = require('shelljs');
 const { readFileSync, writeFileSync } = require('fs');
 
 const rmDirs = ['.git'];
-const rmFiles = ['.all-contributorsrc', '.gitattributes', 'tools/init.ts'];
+const rmFiles = ['.all-contributorsrc', '.gitattributes', 'tools/start.ts'];
 const modifyFiles = ['LICENSE', 'package.json', 'tools/gh-pages-publish.ts'];
 
 const _promptSchemaServiceName = {
