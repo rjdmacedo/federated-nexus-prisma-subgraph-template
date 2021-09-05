@@ -3,9 +3,10 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square "All Contributors")](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg "donate")](https://paypal.me/rjdmacedo)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg "styled with prettier")](https://github.com/prettier/prettier)
 [![renovate badge](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot "maintained with renovate")](https://app.renovatebot.com/dashboard)
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg "donate")](https://paypal.me/rjdmacedo)
 
 This starter project makes creating [Apollo Federated](https://www.apollographql.com/docs/federation/) subgraphs with [Prisma.io](https://www.prisma.io/) and [GraphQL Nexus](https://nexusjs.org/) a breeze.
 
@@ -52,8 +53,9 @@ $ cp prisma/.env.example prisma/.env
 - `yarn dev`: Starts a server on port `4001` (if no other value for `SERVER_PORT` is provided on `./.env` file)
 - `dev:type:check`: Checks for TypeScript errors on the fly, watching you're changes.
 - `yarn database:compose`: Runs the `docker-compose up -d` that deploys the `postgres` database
-- `yarn prisma:migrate`: Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
-- `yarn prisma:deploy`: If there are any changes locally and the database, prisma will deploy your changes to the database.
+- `yarn prisma:migrate:dev`: Create migrations from your Prisma schema, apply them to the database, generate artifacts (e.g. Prisma Client)
+- `yarn prisma:migrate:deploy`: If there are any changes locally and the database, prisma will deploy your changes to the database.
+- `yarn prisma:migrate:reset`: Reset your database and apply all migrations
 - `yarn generate`: Generates Prisma artifacts and 
 - `yarn test`: **[Jest](http://facebook.github.io/jest/)** runs your `*.(spec|test).(ts|tsx|js)` as the chosen suite to develop with confidence.
 

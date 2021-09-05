@@ -5,6 +5,8 @@ import { transformSchemaFederation } from 'graphql-transform-federation';
 
 import { prisma } from '@/context';
 import * as Types from '@/resolvers';
+import { applyMiddleware } from 'graphql-middleware';
+import { permissions } from '@/permissions';
 
 const schema = makeSchema({
   types: [Types],
@@ -27,16 +29,19 @@ const schema = makeSchema({
   },
 });
 
-export const federatedSchema = transformSchemaFederation(schema, {
-  Query: {
-    extend: true,
-  },
-  User: {
-    keyFields: ['id'],
-    async resolveReference(reference: any) {
-      return prisma.user.findUnique({
-        where: { id: reference.id },
-      });
+export const federatedSchema = applyMiddleware(
+  transformSchemaFederation(schema, {
+    Query: {
+      extend: true,
     },
-  },
-});
+    User: {
+      keyFields: ['id'],
+      async resolveReference(reference: any) {
+        return prisma.user.findUnique({
+          where: { id: reference.id },
+        });
+      },
+    },
+  }),
+  permissions,
+);
