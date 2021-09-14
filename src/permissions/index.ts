@@ -1,36 +1,33 @@
-import { rule, shield } from 'graphql-shield';
-
 import type { Context } from '@/context';
+import { rule, shield } from 'graphql-shield';
 
 // @ts-ignore
 const getPermissions = ({ user }) => {
-  return ['read:own_account', 'read:any_account'];
+  return ['read:own:account', 'read:any:account'];
 };
 
 const rules = {
   is: {
-    authenticated: rule()((_parent, _args, { userId }: Context) => {
-      return Boolean(userId);
+    authenticated: rule()((_parent: any, _args: any, context: Context) => {
+      return Boolean(context.token?.sub);
     }),
-    readingOwnAccount: rule()((parent, { id }, { userId }: Context) => {
-      return userId === id;
-      // return user.sub === id;
+    readingOwnAccount: rule()((parent, { id }, context: Context) => {
+      return context.token?.sub === id;
     }),
   },
   can: {
     readAnyAccount: rule()((parent, args, context: Context) => {
-      const { userId } = context;
       const user = context.prisma.user.findUnique({
         where: {
-          id: Number(userId),
+          id: context.token?.sub,
         },
       });
       const userPermissions = getPermissions({ user });
-      return userPermissions.includes('read:any_account');
+      return userPermissions.includes('read:any:account');
     }),
     readOwnAccount: rule()((parent, args, { user }) => {
       const userPermissions = getPermissions({ user });
-      return userPermissions.includes('read:own_account');
+      return userPermissions.includes('read:own:account');
     }),
   },
 };

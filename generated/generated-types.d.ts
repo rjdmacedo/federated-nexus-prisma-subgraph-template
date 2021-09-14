@@ -35,8 +35,9 @@ declare global {
 
 export interface NexusGenInputs {
   UserWhereUniqueInput: { // input type
+    cartId?: string | null; // String
     email?: string | null; // String
-    id?: number | null; // Int
+    id?: string | null; // String
   }
 }
 
@@ -56,6 +57,9 @@ export interface NexusGenObjects {
   AuthPayload: { // root type
     token?: string | null; // String
     user?: NexusGenRootTypes['User'] | null; // User
+  }
+  Cart: { // root type
+    id?: string | null; // ID
   }
   Mutation: {};
   Query: {};
@@ -86,6 +90,10 @@ export interface NexusGenFieldTypes {
     token: string | null; // String
     user: NexusGenRootTypes['User'] | null; // User
   }
+  Cart: { // field return type
+    id: string | null; // ID
+    owner: NexusGenRootTypes['User'] | null; // User
+  }
   Mutation: { // field return type
     login: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
     signup: NexusGenRootTypes['AuthPayload'] | null; // AuthPayload
@@ -111,6 +119,10 @@ export interface NexusGenFieldTypeNames {
   AuthPayload: { // field return type name
     token: 'String'
     user: 'User'
+  }
+  Cart: { // field return type name
+    id: 'ID'
+    owner: 'User'
   }
   Mutation: { // field return type name
     login: 'AuthPayload'

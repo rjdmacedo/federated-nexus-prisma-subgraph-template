@@ -12,7 +12,7 @@ export const Query = objectType({
       // @ts-ignore
       resolve: (_parent, _args, context: Context) => {
         return context.prisma.user.findUnique({
-          where: { id: Number(context.userId) || undefined },
+          where: { id: context.token?.sub },
         });
       },
     });

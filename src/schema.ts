@@ -1,11 +1,11 @@
 import path from 'path';
 import { makeSchema } from 'nexus';
 import { nexusPrisma } from 'nexus-plugin-prisma';
+import { applyMiddleware } from 'graphql-middleware';
 import { transformSchemaFederation } from 'graphql-transform-federation';
 
 import { prisma } from '@/context';
 import * as Types from '@/resolvers';
-import { applyMiddleware } from 'graphql-middleware';
 import { permissions } from '@/permissions';
 
 const schema = makeSchema({
@@ -40,6 +40,15 @@ export const federatedSchema = applyMiddleware(
         return prisma.user.findUnique({
           where: { id: reference.id },
         });
+      },
+    },
+    Cart: {
+      extend: true,
+      keyFields: ['id'],
+      fields: {
+        id: {
+          external: true,
+        },
       },
     },
   }),

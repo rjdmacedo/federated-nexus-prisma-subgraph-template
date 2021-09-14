@@ -1,27 +1,37 @@
 import { verify } from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
+import type { ProducerRecord, RecordMetadata } from 'kafkajs';
 
-import { APP_SECRET } from '@/utils';
+import { APP_SECRET, pipe } from '@/utils';
 
+/** @see https://auth0.com/docs/security/tokens/json-web-tokens/json-web-token-claims#reserved-claims */
 interface Token {
-  userId: string;
+  iat: number; // issued at
+  exp: number; // expiration date
+  sub: string; // subject identifier
 }
 
 export interface Context {
   req: any; // HTTP request carrying the `Authorization` header
-  userId?: string;
+  token: Token | null;
   prisma: PrismaClient;
   permissions: Set<string>;
+  send(record: ProducerRecord): Promise<RecordMetadata[]>;
 }
 
 export const prisma = new PrismaClient({ log: ['query'] });
 
-export const createContext = ({ req: request }: { req: any }): Context => {
-  const token = getAuthToken(request);
-  const userId = token?.userId;
-  const permissions = new Set<string>(request?.headers.permissions);
+export const createContext = ({ req }: { req: any }): Context => {
+  const token = getAuthToken(req);
+  const permissions = new Set<string>(req?.headers.permissions);
 
-  return { ...request, prisma, userId, permissions };
+  return {
+    req,
+    token,
+    prisma,
+    permissions,
+    send: pipe.producer.send,
+  };
 };
 
 function getAuthToken(request: any): Token | null {

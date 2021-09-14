@@ -7,6 +7,8 @@ const prisma = new PrismaClient();
 async function main() {
   console.log(`Start seeding ...`);
   for (let i = 0; i < Math.floor(Math.random() * 100) + 50; i++) {
+    const userTypes = ['RETAILER', 'WHOLESALER'];
+    const randomArrayIndex = getRandomNumberBetween(userTypes.length);
     const user = await prisma.user.create({
       data: {
         firstName: faker.name.firstName(),
@@ -14,6 +16,8 @@ async function main() {
         email: faker.internet.email(),
         password: await hash('password', 10),
         confirmed: faker.datatype.boolean(),
+        // @ts-ignore
+        type: userTypes[randomArrayIndex],
       },
     });
     console.log(`Created user with id: ${user.id}`);
@@ -29,3 +33,7 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+
+function getRandomNumberBetween(max: number): number {
+  return Math.floor(Math.random() * max);
+}

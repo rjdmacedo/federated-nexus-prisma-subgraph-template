@@ -1,5 +1,5 @@
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -8,12 +8,44 @@ generator client {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  password  String
-  firstName String
-  lastName  String
-  confirmed Boolean   @default(false)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String
+  firstName     String
+  lastName      String
+  confirmed     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  type          UserType
+  cartId        String?   @unique
+}
+
+enum UserType {
+  RETAILER
+  WHOLESALER
+}
+
+model Permissions {
+  id          String    @id @default(uuid())
+  action      Action    @default(READ)
+  qualifier   Qualifier @default(OWN)
+  target      Target
+}
+
+enum Action {
+  CREATE
+  READ
+  UPDATE
+  DELETE
+}
+
+enum Qualifier {
+  OWN
+  ANY
+}
+
+enum Target {
+  CART
+  ACCOUNT
+  SETTINGS
 }

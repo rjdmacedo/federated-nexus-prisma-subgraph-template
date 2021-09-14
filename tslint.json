@@ -27,8 +27,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
     "no-unused-expression": true,
-    "no-unbound-method": true,
-    "no-floating-promises": true,
     "radix": true,
     "no-implicit-dependencies": false,
     "restrict-plus-operands": true,
@@ -37,6 +35,6 @@
     "whitespace": false
   },
   "linterOptions": {
-    "exclude": ["node_modules", "tools/*" ,"prisma/*", "./.yarn"]
+    "exclude": ["node_modules/*", "generated/*", "tools/*" ,"prisma/*", "./.yarn"]
   }
 }
