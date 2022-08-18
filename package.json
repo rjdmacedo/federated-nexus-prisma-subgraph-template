@@ -41,7 +41,7 @@
   "dependencies": {
     "@apollo/federation": "0.30.0",
     "@prisma/client": "2.23.0",
-    "apollo-server-core": "3.3.0",
+    "apollo-server-core": "3.10.1",
     "apollo-server-express": "3.3.0",
     "bcryptjs": "2.4.3",
     "dotenv": "10.0.0",
